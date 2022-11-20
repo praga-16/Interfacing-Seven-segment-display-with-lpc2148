@@ -1,17 +1,12 @@
 # Interfacing-Seven-segment-display-with-lpc2148
 
-Name:	
-Roll no 
-Date of experiment:
+ Name:GURU PRASAD.B
+ Roll no :212221230032
 
-
-
-Ex. No. :
-Date: 
- 
-
-### Aim: To configure and display 4 character LED seven segment display and write a c code for displaying number 1 to 9 and A to F 
-### Components required: Proteus ISIS professional suite, Kiel μ vision 5 Development environment 
+### Aim: 
+To configure and display 4 character LED seven segment display and write a c code for displaying number 1 to 9 and A to F 
+### Components required: P
+roteus ISIS professional suite, Kiel μ vision 5 Development environment 
  ![image](https://user-images.githubusercontent.com/36288975/201021692-efa39349-1a3c-4737-aadc-1843b954c78d.png)
 Figure-01 Internal circuit for seven segment MPX4 display
 
@@ -52,13 +47,53 @@ Sl no 	Hex code 	Output of LCD
         Figure -3 Circuit diagram of interfacing for LPX4 - CA
 
 ## Kiel - Program 
+~~~
+#include <LPC214x.h>
+unsigned char dig[]={0x88,0xeb,0x4c,0x49,0x2b,0x19,0x18,0xcb,0x8,0x9,0xa,0x38,0x9c,0x68};
+	void delay(unsigned int count)
+	{
+		int j=0,i=0;
+		for(j=0;j<count;j++)
+		{
+			for(i=0;i<120;i++);
+		}
+	}
+	int main(void)
+	{
+		unsigned char count=0;
+		unsigned int i=0;
+		IO0DIR|=(1<<11);//Set Digit control lines as Outputs
+		IO0SET=(1<<11);
+		IO0DIR|=0x007F8000;
+		while(1)
+		{
+			count++;
+			if(count==16)count=0;
+			for(i=0;i<800;i++)//change to inc/dec speed of count
+			{
+				IO0CLR=0x007F8000;
+				IO0SET=(dig[count]<<15);
+				delay(200);
+			}
+		}
+	}
+~~~
 
+##  Output screen shots :
 
+## Before Simulation:
 
- 
+![op1](https://user-images.githubusercontent.com/95342910/202721228-0aee0656-8b41-4b44-9ef9-f672c0bc58fc.png)
 
+## After Simulation:
+
+![op2](https://user-images.githubusercontent.com/95342910/202721277-98d9aed8-f300-4995-a185-ae37c05e53a8.png)
+
+## Circuit Layout Diagram:
+
+![op3](https://user-images.githubusercontent.com/95342910/202721315-7ee9c633-a348-4cb6-b441-64121d6b7444.png)
 
 ### Result :
 LED seven segment display is interfaced and displayed alpha numeric characters 
 
-##  Output screen shots :
+
